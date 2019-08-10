@@ -6,7 +6,7 @@ import (
 	"net"
 
 	"github.com/KETAKOM/grpc-sample-app/proto/ping"
-
+	"github.com/KETAKOM/grpc-sample-app/service"
 	"google.golang.org/grpc"
 )
 
@@ -19,10 +19,11 @@ func main() {
 	}
 
 	server := grpc.NewServer()
-	pingService := service.pingService()
+	pingService := service.PingService{}
 	ping.RegisterPingServer(server, &pingService)
 
-	fmt.Println("[server started] localhost%s", port)
+	fmt.Printf("[server started] localhost%s", port)
+	err = server.Serve(lp)
 	if err != nil {
 		log.Fatalln(err)
 	}
